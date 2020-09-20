@@ -3,7 +3,7 @@ const canvas = document.querySelector('#etch-a-sketch');
 const ctx = canvas.getContext('2d');
 const shakebutton = document.querySelector('.shake');
 // when const is permamently const some devs use uppercase and underscore for better distinction in later code
-const MOVE_AMOUNT = 10;
+const MOVE_AMOUNT = 15;
 
 // const width = canvas.width;
 // const height = canvas.height;
@@ -71,5 +71,19 @@ function handleKey(e) {
 };
 
 // clear / shake function:
+function clearCanvas() {
+    canvas.classList.add('cleared');
+    ctx.clearRect(0, 0, width, height);
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    canvas.addEventListener('animationend', function(){
+      canvas.classList.remove('cleared')
+    }, {once: true});
+};
+// bind to the shake button:
+shakebutton.addEventListener('click', clearCanvas);
+
 // listen for arrow keys:
 window.addEventListener('keydown', handleKey);
